@@ -2,11 +2,173 @@
     box-sizing: border-box;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+:root {
+    --background: #f6f2ff;
+    --surface: #ffffff;
+    --primary: #7456a3;
+    --primary-dark: #5d4385;
+    --text: #302b38;
+    --muted: #746d7e;
+    --border: #e8e0f0;
+    --soft-purple: #eee7f8;
 }
 
-main {
-    padding: 2rem;
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+}
+
+button {
+    font: inherit;
+}
+
+.app-container {
+    width: min(92%, 620px);
+    margin: 0 auto;
+    padding: 3rem 0;
+}
+
+.app-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 2.4rem;
+    color: var(--primary);
+}
+
+.app-header p {
+    margin: 0.6rem 0 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.timer-card,
+.progress-section,
+.motivation-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(48, 43, 56, 0.07);
+}
+
+.timer-card {
+    text-align: center;
+}
+
+.mode-selector {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+}
+
+.mode-button {
+    flex: 1;
+    border: 0;
+    border-radius: 10px;
+    padding: 0.75rem 0.5rem;
+    background: var(--soft-purple);
+    color: var(--primary-dark);
+    cursor: pointer;
+}
+
+.mode-button.active {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.mode-button:hover {
+    opacity: 0.9;
+}
+
+.timer-display {
+    margin-bottom: 1.8rem;
+}
+
+.mode-label {
+    margin-bottom: 0.4rem;
+    color: var(--muted);
+}
+
+#timer {
+    margin: 0;
+    font-size: 4.5rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+}
+
+.timer-controls button {
+    min-width: 100px;
+    border: 1px solid var(--primary);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    background: #ffffff;
+    color: var(--primary);
+}
+
+#start-button {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.timer-controls button:hover {
+    transform: translateY(-1px);
+}
+
+button:focus-visible {
+    outline: 3px solid rgba(116, 86, 163, 0.3);
+    outline-offset: 3px;
+}
+
+.progress-section,
+.motivation-section {
+    margin-top: 1.2rem;
+}
+
+.progress-section h2,
+.motivation-section h2 {
+    margin-top: 0;
+    font-size: 1.1rem;
+}
+
+.progress-section p,
+.motivation-section p {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+@media (max-width: 560px) {
+    .app-container {
+        padding: 1.5rem 0;
+    }
+
+    .app-header h1 {
+        font-size: 2rem;
+    }
+
+    #timer {
+        font-size: 3.6rem;
+    }
+
+    .mode-selector,
+    .timer-controls {
+        flex-direction: column;
+    }
+
+    .timer-controls button {
+        width: 100%;
+    }
 }
