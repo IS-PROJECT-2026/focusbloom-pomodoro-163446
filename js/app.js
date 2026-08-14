@@ -20,10 +20,34 @@ const modeNames = {
     "long-break": "Long Break"
 };
 
+const sessionCountKey = "focusbloom-session-count";
+const sessionDateKey = "focusbloom-session-date";
+
 let currentMode = "focus";
 let timeRemaining = durations[currentMode];
 let timerInterval = null;
 let completedFocusSessions = 0;
+
+function getTodayDate() {
+    return new Date().toLocaleDateString("en-CA");
+}
+
+function loadSessionData() {
+    const savedDate = localStorage.getItem(sessionDateKey);
+    const savedCount = Number(localStorage.getItem(sessionCountKey));
+
+    if (savedDate === getTodayDate() && Number.isFinite(savedCount)) {
+        completedFocusSessions = savedCount;
+    } else {
+        completedFocusSessions = 0;
+        saveSessionData();
+    }
+}
+
+function saveSessionData() {
+    localStorage.setItem(sessionCountKey, completedFocusSessions);
+    localStorage.setItem(sessionDateKey, getTodayDate());
+}
 
 function updateTimerDisplay() {
     const minutes = Math.floor(timeRemaining / 60);
@@ -51,6 +75,7 @@ function updateSessionDisplay() {
 function completeSession() {
     if (currentMode === "focus") {
         completedFocusSessions++;
+        saveSessionData();
         updateSessionDisplay();
     }
 }
@@ -104,6 +129,7 @@ startButton.addEventListener("click", startTimer);
 pauseButton.addEventListener("click", pauseTimer);
 resetButton.addEventListener("click", resetTimer);
 
+loadSessionData();
 updateTimerDisplay();
 updateModeDisplay();
 updateSessionDisplay();
