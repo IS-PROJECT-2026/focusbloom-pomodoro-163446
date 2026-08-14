@@ -1,11 +1,26 @@
 const timerDisplay = document.getElementById("timer");
+const modeLabel = document.querySelector(".mode-label");
+
 const startButton = document.getElementById("start-button");
 const pauseButton = document.getElementById("pause-button");
 const resetButton = document.getElementById("reset-button");
 
-const focusDuration = 25 * 60;
+const modeButtons = document.querySelectorAll(".mode-button");
 
-let timeRemaining = focusDuration;
+const durations = {
+    focus: 25 * 60,
+    "short-break": 5 * 60,
+    "long-break": 15 * 60
+};
+
+const modeNames = {
+    focus: "Focus Session",
+    "short-break": "Short Break",
+    "long-break": "Long Break"
+};
+
+let currentMode = "focus";
+let timeRemaining = durations[currentMode];
 let timerInterval = null;
 
 function updateTimerDisplay() {
@@ -14,6 +29,17 @@ function updateTimerDisplay() {
 
     timerDisplay.textContent =
         `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+function updateModeDisplay() {
+    modeLabel.textContent = modeNames[currentMode];
+
+    modeButtons.forEach((button) => {
+        button.classList.toggle(
+            "active",
+            button.dataset.mode === currentMode
+        );
+    });
 }
 
 function startTimer() {
@@ -38,12 +64,29 @@ function pauseTimer() {
 
 function resetTimer() {
     pauseTimer();
-    timeRemaining = focusDuration;
+    timeRemaining = durations[currentMode];
     updateTimerDisplay();
 }
+
+function changeMode(mode) {
+    pauseTimer();
+
+    currentMode = mode;
+    timeRemaining = durations[currentMode];
+
+    updateTimerDisplay();
+    updateModeDisplay();
+}
+
+modeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        changeMode(button.dataset.mode);
+    });
+});
 
 startButton.addEventListener("click", startTimer);
 pauseButton.addEventListener("click", pauseTimer);
 resetButton.addEventListener("click", resetTimer);
 
 updateTimerDisplay();
+updateModeDisplay();
