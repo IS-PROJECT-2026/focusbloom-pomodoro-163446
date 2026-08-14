@@ -1,5 +1,6 @@
 const timerDisplay = document.getElementById("timer");
 const modeLabel = document.querySelector(".mode-label");
+const sessionCountDisplay = document.getElementById("session-count");
 
 const startButton = document.getElementById("start-button");
 const pauseButton = document.getElementById("pause-button");
@@ -22,6 +23,7 @@ const modeNames = {
 let currentMode = "focus";
 let timeRemaining = durations[currentMode];
 let timerInterval = null;
+let completedFocusSessions = 0;
 
 function updateTimerDisplay() {
     const minutes = Math.floor(timeRemaining / 60);
@@ -42,6 +44,17 @@ function updateModeDisplay() {
     });
 }
 
+function updateSessionDisplay() {
+    sessionCountDisplay.textContent = completedFocusSessions;
+}
+
+function completeSession() {
+    if (currentMode === "focus") {
+        completedFocusSessions++;
+        updateSessionDisplay();
+    }
+}
+
 function startTimer() {
     if (timerInterval !== null) {
         return;
@@ -51,8 +64,11 @@ function startTimer() {
         if (timeRemaining > 0) {
             timeRemaining--;
             updateTimerDisplay();
-        } else {
+        }
+
+        if (timeRemaining === 0) {
             pauseTimer();
+            completeSession();
         }
     }, 1000);
 }
@@ -90,3 +106,4 @@ resetButton.addEventListener("click", resetTimer);
 
 updateTimerDisplay();
 updateModeDisplay();
+updateSessionDisplay();
