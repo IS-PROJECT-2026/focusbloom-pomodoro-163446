@@ -102,10 +102,10 @@ function updateModeDisplay() {
     modeLabel.textContent = modeNames[currentMode];
 
     modeButtons.forEach((button) => {
-        button.classList.toggle(
-            "active",
-            button.dataset.mode === currentMode
-        );
+        const isActive = button.dataset.mode === currentMode;
+
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-pressed", isActive);
     });
 }
 

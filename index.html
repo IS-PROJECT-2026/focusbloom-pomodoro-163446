@@ -38,9 +38,9 @@
                 </button>
             </div>
 
-            <div class="timer-display">
+            <div class="timer-display" aria-live="polite">
                 <p class="mode-label">Focus Session</p>
-                <p id="timer">25:00</p>
+                <p id="timer" aria-label="Time remaining">25:00</p>
             </div>
 
             <div class="timer-controls">
@@ -56,7 +56,7 @@
 
             <p>
                 Focus sessions completed:
-                <strong id="session-count">0</strong>
+                <strong id="session-count" aria-live="polite">0</strong>
             </p>
 
             <p>
@@ -68,7 +68,8 @@
         <section class="motivation-section">
             <h2>Mindful Reminder</h2>
 
-            <p id="motivation-message">
+            
+            <p id="motivation-message" aria-live="polite">
                 Small focused steps create meaningful progress.
             </p>
         </section>
